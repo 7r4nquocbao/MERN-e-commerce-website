@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { resetRequest } from '../../api';
 import { ToastContainer, toast } from 'react-toastify';
 import '../register-jwt-auth/Register.scss';
 import Header from '../../components/UI/Header';
 import { Link } from 'react-router-dom';
+import { uiLoading } from '../../App';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 function ResetRequestJWT(props) {
 
     const [email, setEmail] = useState('');
 
+    useEffect(() => {
+        document.title = 'Reset Password';
+    }, [])
+
     const handleRequest = e => {
+        uiLoading(true);
         e.preventDefault();
         if (email) {
             resetRequest({ email }).then(res => {
                 setEmail('');
-                toast.success(`Please check your email`);
+                uiLoading(false);
+                toast.success(<div>
+                    <CheckCircleOutlineIcon/> Check your email!
+                </div>)
             }).catch(err => {
                 console.log(err);
             })

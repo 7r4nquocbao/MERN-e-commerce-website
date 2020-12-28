@@ -6,7 +6,6 @@ import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';
-import { json } from 'body-parser';
 import { response } from 'express';
 import sha256 from 'crypto-js/sha256.js';
 import CryptoJS from 'crypto-js';

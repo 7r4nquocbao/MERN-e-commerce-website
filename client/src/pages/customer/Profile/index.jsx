@@ -82,6 +82,7 @@ function Profile(props) {
             console.log(err);
         });
         setAction(false);
+        document.title = 'Profile';
     }, [action]);
 
     const cancelUserOrder = (id) => {

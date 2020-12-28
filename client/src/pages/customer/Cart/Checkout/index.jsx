@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FastField, Formik } from 'formik';
 import { Form } from 'reactstrap';
@@ -18,6 +18,10 @@ function Checkout(props) {
 
   const history = useHistory();
   const {promotionCode} = useParams();
+
+  useEffect(() => {
+    document.title = 'Check Out';
+  }, [])
 
   const handleCheckout = (values) => {
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const appUrl = 'http://localhost:4000';
+//const appUrl = 'https://e-com-mern-project.herokuapp.com';
 
 const productUrl = `${appUrl}/products`;
 const orderUrl = `${appUrl}/orders`;

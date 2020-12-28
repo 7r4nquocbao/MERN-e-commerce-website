@@ -22,6 +22,7 @@ import { getCookie, isAuth, signOut } from '../../helpers/auth';
 import { useHistory } from 'react-router-dom';
 import { createPromotionCode, fetchCodeData } from '../../slices/promotion-slice';
 import Promotion from '../../components/admin/promotion-code';
+import { uiLoading } from '../../App';
 
 const useStyles = makeStyles({
     root: {
@@ -46,6 +47,7 @@ function Admin(props) {
     };
 
     useEffect(() => {
+        document.title = 'Admin Side';
         const token = getCookie('token');
         readUser(isAuth()._id, {
             headers: {

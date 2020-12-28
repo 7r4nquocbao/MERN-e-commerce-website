@@ -21,7 +21,7 @@ function Category(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchProductData())
-
+    document.title = `${categoryName} | Category`;
   }, [dispatch])
 
   return (

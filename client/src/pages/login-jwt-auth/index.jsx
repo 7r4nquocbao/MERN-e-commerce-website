@@ -15,6 +15,9 @@ import { listUser, readUser } from '../../api';
 import * as yub from 'yup';
 import { FastField, Form, Formik } from 'formik';
 import InputField from '../../custom-fields/InputField';
+import { uiLoading } from '../../App';
+import { toast } from 'react-toastify';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 
 
@@ -24,6 +27,10 @@ function LoginJWT(props) {
     const [chat, setChat] = useState([]);
 
     const history = useHistory();
+
+    useEffect(() => {
+        document.title = 'Login';
+    }, [])
 
     const [userData, setUserData] = useState({
         email: '',
@@ -48,15 +55,21 @@ function LoginJWT(props) {
 
     const handleLogin = (values) => {
         //e.preventDefault();
+        uiLoading(true);
         if (values) {
             loginUser(values).then(res => {
                 authenticate(res, () => {
+                    uiLoading(false);
                     history.push('/');
                 });
-                isAuth() && isAuth().role === 'admin' ? console.log('admin role') : console.log('customer role');
+                isAuth() && isAuth().role === 'admin' ? history.push('/admin') : console.log('customer role');
                 console.log(res);
             }).catch(err => {
                 console.log(err);
+                uiLoading(false);
+                toast.error(<div>
+                    <ErrorOutlineIcon/> Account does not exist
+                </div>)
             })
         }
     }

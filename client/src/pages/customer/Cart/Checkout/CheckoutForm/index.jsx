@@ -1,5 +1,5 @@
 import { FastField, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'reactstrap';
 
 import PropTypes from 'prop-types';
@@ -20,7 +20,9 @@ CheckOutForm.defaultProps = {
 function CheckOutForm(props) {
 
   const {onSubmit} = props;
-
+  useEffect(() => {
+    document.title = 'Check Out';
+  }, [])
   const initialValues = {
     phone: '',
     name: '',

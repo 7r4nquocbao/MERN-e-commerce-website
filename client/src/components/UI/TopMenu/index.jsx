@@ -6,13 +6,14 @@ import topLogo from '../../../assets/Images/logo-no-title.png';
 import dataCategories from '../../../constants/local-db.json';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Badge } from '@material-ui/core';
-
-
-
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../../slices/UI-controller-slice';
+import {uiLoading} from '../../../App.js';
 
 function TopMenu(props) {
 
   const categories = dataCategories.categories;
+  const dispatch = useDispatch();
 
   function getQuantity() {
     const locCart = localStorage.getItem('cart');
@@ -96,7 +97,6 @@ function TopMenu(props) {
           </NavLink>
           </Col>
         </div>
-
         <div className="menu__function">
           <Col sm="auto">
             <NavLink

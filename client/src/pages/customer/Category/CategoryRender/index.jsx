@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { useSelector } from 'react-redux';
@@ -15,9 +15,7 @@ CategoryRender.defaultProps = {
 function CategoryRender(props) {
   const { data } = props
   const history = useHistory();
-
   const productList = useSelector(state => state.products)
-
   const filterProduct = productList.filter(item => item.category === data);
 
   const onShowDetail = (product) => {

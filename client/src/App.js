@@ -1,12 +1,21 @@
 import React, { Suspense, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import ReactDOM from 'react-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 import CircularIndeterminate from './components/UI/FeedBack';
+import LoadingUI from './components/UI/Loading';
 import { fetchProductData } from './slices/product-slice';
 import { fetchCodeData } from './slices/promotion-slice';
+import 'react-toastify/dist/ReactToastify.css';
+
+export const uiLoading = (active) => {
+  ReactDOM.render(<LoadingUI active={active}/>, document.getElementById('ui-control'));
+}
 
 function App() {
 
+  const uiController = useSelector(state => state.uiController);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,30 +40,40 @@ function App() {
   const Profile = React.lazy(() => import('./pages/customer/Profile'));
   const Category = React.lazy(()=> import('./pages/customer/Category'));
   return (
-      <Suspense fallback={<CircularIndeterminate/>}>
-          <Router>
-            <Switch>
-              <Route exact path="/" component={HomePage}/>
-              <Route exact path="/search" component={Search}/>     
-              <Route exact path="/admin" component={Admin}/>        
-              <Route exact path="/admin/create-product" component={CreateProduct}/>
-              <Route exact path="/admin/create-product/:id" component={CreateProduct}/>
-              <Route exact path="/admin/manage-cat-bra" component={ManageCatBra}/>
-              <Route exact path="/registerJWT" render={props => <RegisterJWT {...props}/>}/>
-              <Route exact path="/activationJWT/:token" render={props => <ActivationJWT {...props}/>}/>
-              <Route exact path="/login" render={props => <LoginJWT {...props}/>}/>
-              <Route exact path="/reset" render={props => <ResetRequestJWT {...props}/>}/>
-              <Route exact path="/reset/:token" render={props => <ResetPasswordJWT {...props}/>}/>
-              <Route exact path="/cart" component={Cart}/>
-              <Route exact path="/checkout/:promotionCode" component={Checkout}/>
-              <Route exact path="/checkout/paypal" component={CheckoutPaypal}/>
-              <Route exact path="/detail/:productID" component={Detail}/>
-              <Route exact path="/profile" component={Profile}/>
-              <Route exact path="/category/:categoryName" component={Category}/>
-            </Switch>
-          </Router>          
-      </Suspense>
+    <Suspense fallback={<CircularIndeterminate/>}>
+        <div id="ui-control"></div>
+        <ToastContainer 
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover/>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={HomePage}/>
+            <Route exact path="/search" component={Search}/>     
+            <Route exact path="/admin" component={Admin}/>        
+            <Route exact path="/admin/create-product" component={CreateProduct}/>
+            <Route exact path="/admin/create-product/:id" component={CreateProduct}/>
+            <Route exact path="/admin/manage-cat-bra" component={ManageCatBra}/>
+            <Route exact path="/registerJWT" render={props => <RegisterJWT {...props}/>}/>
+            <Route exact path="/activationJWT/:token" render={props => <ActivationJWT {...props}/>}/>
+            <Route exact path="/login" render={props => <LoginJWT {...props}/>}/>
+            <Route exact path="/reset" render={props => <ResetRequestJWT {...props}/>}/>
+            <Route exact path="/reset/:token" render={props => <ResetPasswordJWT {...props}/>}/>
+            <Route exact path="/cart" component={Cart}/>
+            <Route exact path="/checkout/:promotionCode" component={Checkout}/>
+            <Route exact path="/checkout/paypal/:promotionCode" component={CheckoutPaypal}/>
+            <Route exact path="/detail/:productID" component={Detail}/>
+            <Route exact path="/profile" component={Profile}/>
+            <Route exact path="/category/:categoryName" component={Category}/>
+          </Switch>
+        </Router>          
+    </Suspense>
   );
 }
-
 export default App;

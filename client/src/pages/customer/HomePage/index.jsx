@@ -37,6 +37,7 @@ function HomePage(props) {
 
   useEffect(() => {
     dispatch(fetchProductData());
+    document.title = 'Tech Shield | Homepage';
   }, [])
 
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
@@ -71,38 +72,42 @@ function HomePage(props) {
     const productOnPage = product.slice(start, start + itemOnPage);
 
     return (
-      productOnPage && productOnPage.map(product => (
+      productOnPage && productOnPage.map(product => {
 
-        <Col lg="3" md="4" sm="6" xs="12">
-          <div className="product mb-5">
-            <div className="product__image">
-              <Button
-                title="show detail"
-                color="link"
-                onClick={() => onShowDetail(product)}
-              >
-                <img alt="product picture" src={product.thumbnail} />
-              </Button>
-            </div>
-
-            <div className="product__info">
-              <div className="product__info__title">{product.name}</div>
-              <div className="product__info__addToCart">
-                <div className="product__info__addToCart__price">{`${product.price}$`}</div>
-                <div
-                  title="add to cart"
-                  className="product__info__addToCart__button"
-                  onClick={() => onAddToCartClick(product)}
+        if(product.isEnable) {
+          return(
+          <Col lg="3" md="4" sm="6" xs="12">
+            <div className="product mb-5">
+              <div className="product__image">
+                <Button
+                  title="show detail"
+                  color="link"
+                  onClick={() => onShowDetail(product)}
                 >
-                  Add to cart
-                      </div>
+                  <img alt="product picture" src={product.thumbnail} />
+                </Button>
               </div>
 
+              <div className="product__info">
+                <div className="product__info__title">{product.name}</div>
+                <div className="product__info__addToCart">
+                  <div className="product__info__addToCart__price">{`${product.price}$`}</div>
+                  <div
+                    title="add to cart"
+                    className="product__info__addToCart__button"
+                    onClick={() => onAddToCartClick(product)}
+                  >
+                    Add to cart
+                        </div>
+                </div>
+
+              </div>
             </div>
-          </div>
-        </Col>
-      ))
-    )
+          </Col>
+          )
+       }
+      }
+    ))
   }
   const calcPagination = () => {
 

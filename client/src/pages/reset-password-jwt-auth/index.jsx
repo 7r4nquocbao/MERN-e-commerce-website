@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { resetPassword } from '../../api';
 import { ToastContainer, toast } from 'react-toastify';
 import '../register-jwt-auth/Register.scss';
 import Header from '../../components/UI/Header';
+import { uiLoading } from '../../App';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 function ResetPasswordJWT(props) {
 
@@ -12,12 +14,20 @@ function ResetPasswordJWT(props) {
     const { token } = params;
     const [newPassword, setNewPassword] = useState('');
 
+    useEffect(() => {
+        document.title = 'Reset Password';
+    }, [])
+
     const handleRequest = e => {
+        uiLoading(true);
         e.preventDefault();
         if (newPassword) {
             resetPassword({ newPassword: newPassword, resetPasswordLink: token }).then(res => {
                 setNewPassword('');
-                toast.success(`Ok`);
+                uiLoading(false);
+                toast.success(<div>
+                    <CheckCircleOutlineIcon/> Password changed
+                </div>)
             }).catch(err => {
                 console.log(err);
             })

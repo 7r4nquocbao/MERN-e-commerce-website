@@ -16,6 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { uiLoading } from '../../../App';
 
 Modal.setAppElement('#root');
 
@@ -23,7 +24,10 @@ function CreateProduct(props) {
 
     const dispatch = useDispatch();
     const params = useParams();
-    console.log(params.id);
+
+    useEffect(() => {
+        document.title = 'Create Product';
+    }, [])
 
     const history = useHistory();
 
@@ -195,16 +199,6 @@ function CreateProduct(props) {
     return (
         <div className="container mt-5">
             <h1>{params.id ? "Update product" : "Create Product"}</h1>
-            <ToastContainer 
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover/>
             <form>
                 <div className="form-row">
                     <div className="form-group col">

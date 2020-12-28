@@ -1,18 +1,27 @@
 import { FastField, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
 import * as Yup from 'yup';
 import { registerUser } from '../../api';
+import { uiLoading } from '../../App';
 import topLogo from '../../assets/Images/main-logo.png';
 import Header from '../../components/UI/Header';
 import { DATE, MONTH, YEAR } from '../../constants/dateOfBirth';
 import InputField from '../../custom-fields/InputField';
 import RadioField from '../../custom-fields/RadioField';
 import SelectField from '../../custom-fields/SelectField';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import WarningIcon from '@material-ui/icons/Warning';
 import './Register.scss';
 
 function RegisterJWTAuth(props) {
+
+    useEffect(() => {
+        document.title = 'Register';
+    }, [])
+
     const initialValues = {
         name: '',
         gender: 'male',
@@ -59,6 +68,8 @@ function RegisterJWTAuth(props) {
     })
 
     const handleSubmit = (val) => {
+
+        uiLoading(true);
         console.log(val);
         const dateOfBirth = { 
             name: val.name,
@@ -77,8 +88,16 @@ function RegisterJWTAuth(props) {
 
         registerUser(dateOfBirth).then(res => {
             console.log(res);
+            uiLoading(false);
+            toast.success(<div>
+                <CheckCircleOutlineIcon/> Check your email!
+            </div>)
         }).catch(err => {
             console.log(err);
+            uiLoading(false);
+            toast.error(<div>
+                <WarningIcon/> Error!
+            </div>)
         })
     }
 

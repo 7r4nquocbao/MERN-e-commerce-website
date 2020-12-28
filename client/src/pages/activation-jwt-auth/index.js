@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { activeUser } from '../../api';
 import './JWT.scss';
 
 function ActivationJWT(props) {
+
+    useEffect(() => {
+        document.title = 'Activation Account';
+    }, [])
 
     const params = useParams();
     const { token } = params;

@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import InputField from '../../../../../custom-fields/InputField';
 import RadioField from '../../../../../custom-fields/RadioField';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import * as yub from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
@@ -19,6 +19,7 @@ import { isAuth } from '../../../../../helpers/auth';
 function CheckoutPaypal(props) {
 
     const {onSubmit} = props;
+    const {promotionCode} = useParams();
 
     const [data, setData] = useState({
         phone: '',
@@ -33,6 +34,7 @@ function CheckoutPaypal(props) {
     const [total, setTotal] = useState(1);
     const dispatch = useDispatch();
     useEffect(async () => {
+        document.title = 'PayPal Check Out';
         const result = await dispatch(fetchProductData());
         const filter = filterData(unwrapResult(result));
         let count = 1;
@@ -77,7 +79,7 @@ function CheckoutPaypal(props) {
           idu = '';
         }
     
-        const orderUpdated = {...data, idUser: idu};
+        const orderUpdated = {...data, idUser: idu, promotionCode: promotionCode};
         console.log(data);
         const result = {
           order: orderUpdated,

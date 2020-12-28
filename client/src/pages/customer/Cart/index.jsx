@@ -23,6 +23,7 @@ function Cart(props) {
     const [isPromotion, setIsPromotion] = useState(false);
 
     useEffect(async () => {
+        document.title = 'Cart';
         const result = await dispatch(fetchProductData());
         const filter = filterData(unwrapResult(result));
         let count = 1;

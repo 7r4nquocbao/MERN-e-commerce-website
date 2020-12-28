@@ -20,6 +20,7 @@ function Search(props) {
 
   useEffect(() => {
     dispatch(fetchProductData());
+    document.title = 'Search';
   }, [dispatch])
 
   return (

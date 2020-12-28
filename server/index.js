@@ -28,7 +28,8 @@ socketio.on('connection', socket => {
 dotenv.config();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({ origin: 'https://e-com-mern-project.netlify.app' }));
+app.use(cors({ origin: 'http://localhost:3000' }));
+//app.use(cors({ origin: 'https://e-com-mern-project.netlify.app' }));
 app.use(morgan('dev'));
 
 app.use('/products', productRoutes);
@@ -41,8 +42,8 @@ app.use('/orderdetails', orderDetailRoutes);
 app.use('/comments', commentRoutes);
 app.use('/promotions', promotionRoutes);
 
-//const CONNECTION_URL = "mongodb://localhost:27017/e-commerce-website"
-const CONNECTION_URL = "mongodb+srv://7r4nquocbao:7r4nquocbao@cluster0.e8vei.mongodb.net/<dbname>?retryWrites=true&w=majority"
+const CONNECTION_URL = "mongodb://localhost:27017/e-commerce-website"
+//const CONNECTION_URL = "mongodb+srv://7r4nquocbao:7r4nquocbao@cluster0.e8vei.mongodb.net/<dbname>?retryWrites=true&w=majority"
 const PORT = process.env.PORT || 4000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
