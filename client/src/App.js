@@ -61,7 +61,7 @@ function App() {
             <Route exact path="/admin/create-product/:id" component={CreateProduct}/>
             <Route exact path="/admin/manage-cat-bra" component={ManageCatBra}/>
             <Route exact path="/registerJWT" render={props => <RegisterJWT {...props}/>}/>
-            <Route exact path="/activationJWT/:token" render={props => <ActivationJWT {...props}/>}/>
+            <Route exact path="/activationJWT/:token" component={ActivationJWT}/>
             <Route exact path="/login" render={props => <LoginJWT {...props}/>}/>
             <Route exact path="/reset" render={props => <ResetRequestJWT {...props}/>}/>
             <Route exact path="/reset/:token" render={props => <ResetPasswordJWT {...props}/>}/>

@@ -37,3 +37,7 @@ export const deleteProduct = async (req, res) => {
     await Product.findOneAndDelete({ _id: id });
     res.json({ message: "Product deleted successfully." });
 }
+
+export const envShow = (req, res) => {
+    res.json(process.env.JWT_SECRET)
+}

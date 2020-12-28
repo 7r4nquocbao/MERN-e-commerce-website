@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import ReactImageMagnify from 'react-image-magnify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Container, Table } from 'reactstrap';
 import { createComment, getComments } from '../../../api';
@@ -28,6 +28,8 @@ Detail.propTypes = {
 function Detail(props) {
 
   const handleDragStart = (e) => e.preventDefault();
+
+  const codes = useSelector(state => state.promotionCodes);
 
   const responsive = {
     0: { items: 1 },
@@ -67,6 +69,9 @@ function Detail(props) {
     })
     window.scrollTo(0, 0);
     document.title = filter.name;
+
+    console.log(codes);
+
   }, [])
 
   const postComment = () => {
@@ -175,6 +180,21 @@ function Detail(props) {
     )
   }
 
+  const displayCodes = () => {
+    return (
+      codes && codes.map(item => {
+        const s = new Date(item.startDate);
+        const e = new Date(item.endDate);
+        const n = new Date();
+        if(n >= s && n <= e) {
+          return (
+            <p>Use code: <strong>{item.code}</strong> to discount {item.discount}%.</p>
+          )
+        }
+      })
+    )
+  }
+
   return (
     <div>
       <Header />
@@ -216,6 +236,7 @@ function Detail(props) {
             <div className="detail-price">
               <p>{`${product.price}$`}</p>
             </div>
+            {displayCodes()}
             <Button
               title="add to cart"
               className="btn-addToCart"
